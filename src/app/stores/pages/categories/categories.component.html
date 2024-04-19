@@ -1,0 +1,74 @@
+<div style="max-width: 800px; margin: 20px auto; padding: 20px; border: 1px solid #ccc; border-radius: 5px; background-color: #f9f9f9;">
+  <h1 style="text-align: center;">Listado de categorias</h1>
+
+  <p-table [value]="categoryList" class="p-datatable-gridlines">
+    <ng-template pTemplate="header">
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Created By</th>
+            <th>Actions</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-category>
+        <tr>
+            <td>{{ category.name }}</td>
+            <td>{{ category.description }}</td>
+            <td>{{ category.createdBy }}</td>
+            <td>
+                <button pButton type="button" icon="pi pi-trash" (click)="deleteCategory(category)" class="p-button-danger" style="margin-right: 5px;">Eliminar</button>
+                <button pButton type="button" icon="pi pi-pencil" (click)="editCategory(category)" class="p-button-success" style="margin-right: 5px;">Editar</button>
+            </td>
+        </tr>
+
+    </ng-template>
+
+
+</p-table>
+<div style="text-align: right;">
+  <button style="padding: 5px 10px; margin-left: 5px; border: none; border-radius: 3px; cursor: pointer; background-color: #007bff; color: #fff;"  (click)="creatingCategory()" >Agregar Producto</button>
+</div>
+
+</div>
+
+
+
+
+<p-dialog header="Editar Categoría" [(visible)]="displayDialog" [modal]="true" [responsive]="true" [style]="{ 'width': '50%', 'background-color': 'white', 'padding': '20px' }"
+>
+  <div *ngIf="selectedCategory">
+      <!-- Formulario de edición -->
+      <div>
+          <label for="name">Nombre:</label>
+          <input type="text" id="name" placeholder=" " [(ngModel)]="selectedCategory.name" name="name" />
+      </div>
+      <div>
+          <label for="description">Descripción:</label>
+          <textarea id="description" placeholder=" " [(ngModel)]="selectedCategory.description" name="description"></textarea>
+      </div>
+  </div>
+
+  <button pButton type="button" label="Guardar" icon="pi pi-check" class="p-button-success"(click)="saveCategoryUpdated()">GUARDAR</button>
+  <button pButton type="button" label="Cancelar" icon="pi pi-times" class="p-button-danger" (click)="hideDialog()">CANCELAR</button>
+</p-dialog>
+
+
+<p-dialog header="CREAR Categoría" [(visible)]="displayDialogToCreate" [modal]="true" [responsive]="true" [style]="{ 'width': '50%', 'background-color': 'white', 'padding': '20px' }"
+>
+
+      <!-- Formulario de edición -->
+      <ng-template pTemplate="body" let-category>
+      <div>
+          <label for="name">Nombre:</label>
+          <input type="text" id="name" placeholder=" " name="name" [(ngModel)]="category.name" />
+      </div>
+      <div>
+          <label for="description">Descripción:</label>
+          <textarea id="description" placeholder=" " name="description" [(ngModel)]="category.description"></textarea>
+      </div>
+
+  <button pButton type="button" label="Guardar" icon="pi pi-check" class="p-button-success"(click)="saveNewCategory(category)">GUARDAR</button>
+  <button pButton type="button" label="Cancelar" icon="pi pi-times" class="p-button-danger" (click)="hideDialogToCreate()">CANCELAR</button>
+
+</ng-template>
+</p-dialog>
